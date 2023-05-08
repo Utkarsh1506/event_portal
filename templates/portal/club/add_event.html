@@ -1,0 +1,214 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static 'css/portal.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.16/tailwind.min.css">
+
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Philosopher&display=swap');
+
+        #star {
+            color: red;
+        }
+    </style>
+
+
+    <title>{{ club.name }} Portal</title>
+
+</head>
+
+<body>
+    <div class="container bg-gray-100">
+
+        <!-- ------------------------Navbar-------------------------------- -->
+        <div class="sidebar">
+            <div class="logo">
+                <span id="name">
+
+                    <h2>{{ club.name }}</h2>
+                    <h5>
+                        &nbsp;&nbsp;&nbsp;&nbsp; Portal
+                    </h5>
+                </span>
+
+            </div>
+
+
+            <div class="menu_btn">
+                <span class="material-symbols-outlined" id="btn">
+                    menu
+                </span>
+                <span class="material-symbols-outlined" id="btn_close">
+                    close
+                </span>
+            </div>
+
+            <!-- ============================ DEAN =============================== -->
+
+            <div class="menu_items">
+                <ul class="nav_list">
+
+                    <li>
+                        <a href="{% url 'club_home' %}" id="home">
+                            <span id="logo_home">
+                                <i class="fa-solid fa-house"></i>
+                            </span>
+
+                            <span class="links_name">Home</span>
+                        </a>
+                        <span class="tooltip">Home</span>
+                    </li>
+                    <li>
+                        <a href="{% url 'club_events' %}" id="tab3">
+                            <span class="material-symbols-outlined">
+                                campaign
+                            </span>
+                            <span class="links_name">Events</span>
+                        </a>
+                        <span class="tooltip">Events</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ======================================== NAVBAR END ===================================== -->
+        <!-- ======================================== NAVBAR END ===================================== -->
+        <!-- ======================================== NAVBAR END ===================================== -->
+        <!-- ======================================== NAVBAR END ===================================== -->
+        <!-- ======================================== NAVBAR END ===================================== -->
+
+        <!-- --------------Home Content---------------- -->
+
+        {% for message in messages %}
+        <div class="alert alert {{ message.tags }} alert-dismissible fade show" role="alert">
+            <strong>{{ message }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+
+
+        <div class="home_content">
+            <div class="navbar">
+                <h1>{{ club.name }} Portal <small>-> Add Event </small></h1>
+
+
+            </div>
+
+            <!-- ==============================Events================================ -->
+
+            <section class="bg-gray-100">
+
+                <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+                    <div class="max-w-3xl mx-auto">
+                        <h2 class="text-2xl font-bold mb-4">ADD EVENT</h2>
+
+                        <form action="add_event" method="post" enctype="multipart/form-data">
+
+                            {% csrf_token %}
+
+                            <div class="mb-4">
+                                <label class="block font-bold mb-2" for="event_title">Event Title<span
+                                        id="star">*</span></label>
+                                <input
+                                    class="block w-full px-4 py-2 rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                    type="text" name="event_title" id="event_title" required>
+                            </div>
+
+
+                            <div class="mb-4">
+                                <label class="block font-bold mb-2" for="organizer">Organizer<span
+                                        id="star">*</span></label>
+                                <input
+                                    class="block w-full px-4 py-2 rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                    type="text" name="organizer" id="organizer" required>
+                            </div>
+
+
+                            <div class="mb-4">
+                                <label class="block font-bold mb-2" for="venue">Venue<span id="star">*</span></label>
+                                <input
+                                    class="block w-full px-4 py-2 rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                    type="text" name="venue" id="venue" required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="block font-bold mb-2" for="description">Description<span
+                                        id="star">*</span></label>
+                                <textarea
+                                    class="block w-full px-4 py-2 rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                    name="description" id="description" rows="4" required></textarea>
+                            </div>
+
+                            <div class="mb-4">
+
+                                <div class="mb-4">
+                                    <label class="block font-bold mb-2" for="date">Date<span id="star">*</span></label>
+                                    <input
+                                        class="block w-full px-4 py-2 rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                        type="date" name="date" id="date" required>
+                                </div>
+
+
+
+                                <div class="mb-4">
+                                    <label class="block font-bold mb-2" for="budget_file">Budget<span
+                                            id="star">*</span></label>
+                                    <div class="flex">
+
+                                        <label for="budget_file"
+                                            class="flex-1 bg-gray-200 text-gray-700 py-2 px-4 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300">
+                                            <span class="block text-center">Choose File</span>
+                                            <input id="budget_file" name="budget_file" type="file" class="hidden" required>
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="block font-bold mb-2" for="event_poster">Event Poster</label>
+                                    <div class="flex">
+
+                                        <label for="event_poster"
+                                            class="flex-1 bg-gray-200 text-gray-700 py-2 px-4 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300">
+                                            <span class="block text-center">Choose File</span>
+                                            <input id="event_poster" name="event_poster" type="file" class="hidden">
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div>
+                                <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500"
+                                    type="submit">Submit</button>
+                            </div>
+                    </div>
+
+                    </form>
+                </div>
+        </div>
+
+        </section>
+
+
+    </div>
+
+
+
+    <script src="https://kit.fontawesome.com/ac1aec28f7.js" crossorigin="anonymous"></script>
+    <script src="{% static 'js/portal.js' %}"></script>
+</body>
+
+</html>
